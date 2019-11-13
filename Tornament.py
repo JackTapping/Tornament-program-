@@ -8,25 +8,46 @@ def add_entries():
 
     while keep_adding_participants:
 
-        # asking the user to choose if they are going to add in a
-        # solo or team participant
-        print("Please pick if this is a team or solo entire:")
-        print("(A) Solo")
-        print("(B) Team")
+        # while loop will run un till the user enters in a valid input
+        while True:
+            # asking the user to choose if they are going to add in a
+            # solo or team participant
+            print("Please pick if this is a team or solo entire:")
+            print("(A) Solo")
+            print("(B) Team")
 
-        # getting the input from the user
-        users_input = input("")
-        print()  # adding in blank print statements to make the program more readable
+            # getting the input from the user
+            users_input = input("")
+            print()  # adding in blank print statements to make the program more readable
+
+            # braking out of the loop if the users input is a or b
+            if users_input.lower() == 'a' or users_input.lower() == 'b':
+                break
+            else:
+                # printing out error message if the user has entered an i valid input
+                print("INVALID INPUT")
+                print()
 
         # Entering the correct if statements depending on the users input
         # if the user picks to enter a Solo entire this if statements will run
         if users_input == 'a':
-            # asking the user to enter in the name of the Participant
-            participants_name = input("Please enter in the name of the participants: ")
+
+            while True:
+                # asking the user to enter in the name of the Participant
+                participants_name = input("Please enter in the name of the participants: ")
+
+                # checking to see if the user has only entered in letters for the participants name
+                if not participants_name.isalpha():
+                    print()
+                    print("INVALID INPUT")
+                    print("A participants name can only contain letters")
+                    print()
+                else:
+                    # if only letters have been used the loop will break
+                    break
 
             # adding the participants name to the solo_entire array
             solo_entries.append(participants_name)
-
 
         # if the user picks to enter in a Team entire this statements will run
         elif users_input == 'b':
@@ -42,8 +63,21 @@ def add_entries():
             # creating a for loop that will run 5 times so all
             # members of the team can be added
             for i in range(5):
-                # asking the user for the name of the team member
-                team_member_name = input("Please enter in the name of the team member " + str(i + 1) + " : ")
+
+                while True:
+                    # asking the user for the name of the team member
+                    team_member_name = input("Please enter in the name of the team member " + str(i + 1) + " : ")
+
+                    # checking to see if the user has only entered in letters for the participants name
+                    if not team_member_name.isalpha():
+                        print()
+                        print("INVALID INPUT")
+                        print("A participants name can only contain letters")
+                        print()
+                    else:
+                        # if only letters have been used the loop will break
+                        break
+
                 # adding the team member to the temp array
                 temp_team_array.append(team_member_name)
 
@@ -53,13 +87,22 @@ def add_entries():
 
         # asking the user if they want to enter in a new participants
         print()
-        add_more_participants = input("Would you like to enter in a new participant \n(Y) Yes \n(N) No\n")
-        print()
 
-        # if the user chooses no then the value of keep_adding_participants will be set to false
-        # this will cause the while loop to stop running
-        if add_more_participants == 'n':
-            keep_adding_participants = False
+        while True:
+            add_more_participants = input("Would you like to enter in a new participant \n(Y) Yes \n(N) No\n")
+            print()
+
+            # if the user chooses no then the value of keep_adding_participants will be set to false
+            # this will cause the while loop to stop running
+            if add_more_participants.lower() == 'n':
+                keep_adding_participants = False
+                break
+            elif  add_more_participants.lower() == 'y':
+                keep_adding_participants =True
+                break
+            else:
+                print("INVALID INPUT")
+                print()
 
 
 # method for naming the events
@@ -106,33 +149,67 @@ def awarding_points():
 
     # this loop will get the name of every event
     for events in event_names:
+        print()
 
-        # this index will be used to access the correct arrys in the teamp and solo points arrays
+        # this index will be used to access the correct arrays in the temp and solo points arrays
         index = 0
+        
         # this for loop will allow the user to add in the scores for the solo entries
         for names in solo_entries:
-            # asking the user to enter in how many points the paricipants got in the event
-            points = int(input("Enter in how many ponits did " + names + " get in the " + events + " event : "))
 
-            # adding the points to the correct place in the solo points array
-            solo_points[index][1] += points
+            valid_input = False
+            # while loop will run until the user enters ina vail in put
+            while not valid_input:
 
-            # increamenting index by one so we can get access to the exit array in solo points
-            index += 1
+                # using a try/except block because the user may enter in a value that will break the program
+                try:
+                    # asking the user to enter in how many points the participants got in the event
+                    points = int(input("Enter in how many points did " + names + " get in the " + events + " event : "))
 
-        # setting index back to 0 so we can use it agine for the team points array
+                    # adding the points to the correct place in the solo points array
+                    solo_points[index][1] += points
+
+                    # incrementing index by one so we can get access to the exit array in solo points
+                    index += 1
+
+                    valid_input = True
+
+                except ValueError:
+                    print()
+                    print("INVALID INPUT")
+                    print("Only numbers may be used as scores ")
+                    print()
+
+        # setting index back to 0 and valid_input to false so we can use it agine for the team points array
         index = 0
+        valid_input = False
 
         # allowing the user to add in the points for the Teams
         for teams in team_points:
-            # asking the user to enter in how many points the paricipants got in the event
-            points = int(
-                input("Enter in how many ponits did " + team_entries[index][0] + " get in the " + events + " event : "))
 
-            # adding the points to the correct place in the solo points array
-            team_points[index][1] += points
+            # while loop will run until the user enters in a valid input
+            while not valid_input:
 
-            # increamenting index by one so we can get access to the enxt array in solo points
+                # using a try/except block because the user may enter in a value that will break the program
+                try:
+                    # asking the user to enter in how many points the Team got in the event
+                    points = int(input("Enter in how many points did " + team_entries[index][0] + " get in the " + events + " event : "))
+
+                    # adding the points to the correct place in the solo points array
+                    team_points[index][1] += points
+
+                    # incrementing index by one so we can get access to the exit array in solo points
+                    index += 1
+
+                    valid_input = True
+
+                except ValueError:
+                    print()
+                    print("INVALID INPUT")
+                    print("Only numbers may be used as scores ")
+                    print()
+
+            # incrementing index by one so we can get access to the next array in solo points
             index += 1
 
 
