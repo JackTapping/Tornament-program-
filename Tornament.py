@@ -1,5 +1,63 @@
 # +++ creating methods that will be ued in the program +++
 
+# This method will be used as a main menu for the porgram
+def main_maenu():
+
+    # putting everything in a while loop that will run untill the user enters a vaild input
+    while(True):
+
+        # printing out the title so the user knows what menu they are in
+        title_text = "Main Menu"
+        print(title_text.center(40,'='))
+
+        # asking the suer to pick a menu
+        print()
+        print("please pick a menu to use:")
+        print()
+        print("(A) Add Participants")
+        print("(B) Name Events")
+        print("(C) Award Points")
+        print("(D) view Scores")
+        print("(E) Quit")
+
+        # geting the user input
+        print()
+        user_input = input("Enter Menu: ")
+
+        # cheking user input and sending them to the correct menu/ending the program
+
+        # cheking what the user has enterd 
+        if user_input.lower() == 'a':
+            print()
+            # calling the correct function
+            add_entries()
+            print()
+            
+        elif user_input.lower() == 'b':
+            print()
+            naming_events()
+            print()
+                
+        elif user_input.lower() == 'c':
+            print()
+            awarding_points()
+            print()
+                
+        elif user_input.lower() == 'd':
+            print()
+            print_out_socres()
+            print()
+
+        # if the user enters in e then the main loop will break and end the program  
+        elif user_input.lower() == 'e':
+            break;
+
+        # if the user does not enter in one of the options they will get an error 
+        else:
+            print()
+            print("INVALID INPUT")
+            print()
+
 # this method will be used to add in values to the arrays that hold the entries
 def add_entries():
     # this bool will be used as the while loops condition
@@ -247,7 +305,4 @@ event_names = []
 solo_points = []
 team_points = []
 
-add_entries()
-naming_events()
-awarding_points()
-print_out_socres()
+main_maenu()
