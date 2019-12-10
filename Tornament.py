@@ -2,64 +2,71 @@
 
 # This method will be used as a main menu for the porgram
 def main_maenu():
-
     # putting everything in a while loop that will run untill the user enters a vaild input
-    while(True):
+    while (True):
 
         # printing out the title so the user knows what menu they are in
         title_text = "Main Menu"
-        print(title_text.center(40,'='))
+        print(title_text.center(40, '='))
 
-        # asking the suer to pick a menu
+        # asking the user to pick a menu
         print()
-        print("please pick a menu to use:")
+        print("         please pick a menu to use")
         print()
-        print("(A) Add Participants")
-        print("(B) Name Events")
-        print("(C) Award Points")
-        print("(D) view Scores")
-        print("(E) Quit")
+        print("(A) Add Participants     (D) Award Points")
+        print("(B) View Participants    (E) view Scores")
+        print("(C) Name Events          (Q) Quit")
 
-        # geting the user input
+        # getting the user input
         print()
         user_input = input("Enter Menu: ")
 
         # cheking user input and sending them to the correct menu/ending the program
 
-        # cheking what the user has enterd 
+        # cheking what the user has enterd
         if user_input.lower() == 'a':
             print()
             # calling the correct function
             add_entries()
             print()
-            
+
         elif user_input.lower() == 'b':
+            print()
+            view_entries()
+            print()
+
+        elif user_input.lower() == 'c':
             print()
             naming_events()
             print()
-                
-        elif user_input.lower() == 'c':
+
+        elif user_input.lower() == 'd':
             print()
             awarding_points()
             print()
-                
-        elif user_input.lower() == 'd':
+
+        elif user_input.lower() == 'e':
             print()
             print_out_socres()
             print()
 
-        # if the user enters in e then the main loop will break and end the program  
-        elif user_input.lower() == 'e':
+        # if the user enters in e then the main loop will break and end the program
+        elif user_input.lower() == 'q':
             break;
 
-        # if the user does not enter in one of the options they will get an error 
+        # if the user does not enter in one of the options they will get an error
         else:
             print()
             print("INVALID INPUT")
             print()
 
+
 # this method will be used to add in values to the arrays that hold the entries
 def add_entries():
+    # printing out the title so the user knows what menu they are in
+    title_text = "Add Participants"
+    print(title_text.center(40, '='))
+
     # this bool will be used as the while loops condition
     # as long as it is true the loop will run
     keep_adding_participants = True
@@ -155,16 +162,65 @@ def add_entries():
             if add_more_participants.lower() == 'n':
                 keep_adding_participants = False
                 break
-            elif  add_more_participants.lower() == 'y':
-                keep_adding_participants =True
+            elif add_more_participants.lower() == 'y':
+                keep_adding_participants = True
                 break
             else:
                 print("INVALID INPUT")
                 print()
 
 
+# method will print out all of the names of the entries inside of the arrays
+def view_entries():
+    # printing out the name of the menu
+    print()
+    text = "VIEW ENTRIES"
+    print(text.center(40, "="))
+    print()
+
+    # printing out the names of the solo entries array
+    print("Solo Entries")
+    index = 1
+    for names in solo_entries:
+        print(str(index).ljust(10, ".") + names)
+        index += 1
+
+    print()
+    print()
+
+    index = 1
+    print("Team Entries")
+    # printing out the names in the team arrays
+    # first for loop is to get the individual team arrays
+    for teams in team_entries:
+        print()
+        # bool will be used to print out extra text for the team name
+        name_of_team = True
+
+        # second for loop is for getting the items out of each array
+        for names in teams:
+            # if it is the first item in the array it will be the team name
+            if name_of_team:
+                print(str(index).ljust(10, ".") + names)
+                index += 1
+                name_of_team = False
+            else:
+                print(names)
+
+    # asking the user to press a key to go back to the main menu
+    print("Press any key to leave menu")
+    input()
+
+
 # method for naming the events
 def naming_events():
+    # printing out the title so the user knows what menu they are in
+    title_text = "Name Events"
+    print(title_text.center(40, '='))
+
+    # making sure the array that holds the names is all ways empty at the start of the method
+    event_names.clear()
+
     # creating a for loop that will run 5 times
     # so the user can add in all of the names of the events
     for i in range(5):
@@ -174,108 +230,213 @@ def naming_events():
         event_names.append(name_of_event)
 
 
-# emethod for awwarding the points
+# method for awarding the points
 def awarding_points():
-    # adding all participants to the points array with a default score of 0
 
-    # adding in values for the solo array
-    for names in solo_entries:
-        # crating a temp array to hold the name and score
-        temp_array = []
-
-        # adding in the name and the score to the temp array
-        temp_array.append(names)
-        temp_array.append(0)
-
-        # adding the values of the temp array to solo points
-        solo_points.append(temp_array)
-
-    # adding in values for the eams array
-    for teams in team_entries:
-        # crating a temp array to hold the team name and score
-        temp_array = []
-
-        # adding in the name and the score to the temp array
-        temp_array.append(teams[0])
-        temp_array.append(0)
-
-        # adding the values of the temp array to solo points
-        team_points.append(temp_array)
-
-    # creating nested for loops to go through each event and allow the user to enter in the scores
-    # the first for loop will get the event that is being scored
-
-    # this loop will get the name of every event
-    for events in event_names:
+    # making sure that all of the entries have been entered in to the 
+    if len(event_names) == 0:
         print()
+        print("You must enter in the name of the events first")
+        print()
+        return
+    if len(solo_entries) == 0 or len(team_entries) == 0:
+        print()
+        print("You must enter in the partcipants first")
+        print()
+        return
+    
+    # printing out the title so the user knows what menu they are in
+    title_text = "Awarding Points"
+    print(title_text.center(40, '='))
 
-        # this index will be used to access the correct arrays in the temp and solo points arrays
-        index = 0
-        
-        # this for loop will allow the user to add in the scores for the solo entries
-        for names in solo_entries:
-
-            valid_input = False
-            # while loop will run until the user enters ina vail in put
-            while not valid_input:
-
-                # using a try/except block because the user may enter in a value that will break the program
-                try:
-                    # asking the user to enter in how many points the participants got in the event
-                    points = int(input("Enter in how many points did " + names + " get in the " + events + " event : "))
-
-                    # adding the points to the correct place in the solo points array
-                    solo_points[index][1] += points
-
-                    # incrementing index by one so we can get access to the exit array in solo points
-                    index += 1
-
-                    valid_input = True
-
-                except ValueError:
-                    print()
-                    print("INVALID INPUT")
-                    print("Only numbers may be used as scores ")
-                    print()
-
-        # setting index back to 0 and valid_input to false so we can use it agine for the team points array
-        index = 0
-        valid_input = False
-
-        # allowing the user to add in the points for the Teams
-        for teams in team_points:
-
-            # while loop will run until the user enters in a valid input
-            while not valid_input:
-
-                # using a try/except block because the user may enter in a value that will break the program
-                try:
-                    # asking the user to enter in how many points the Team got in the event
-                    points = int(input("Enter in how many points did " + team_entries[index][0] + " get in the " + events + " event : "))
-
-                    # adding the points to the correct place in the solo points array
-                    team_points[index][1] += points
-
-                    # incrementing index by one so we can get access to the exit array in solo points
-                    index += 1
-
-                    valid_input = True
-
-                except ValueError:
-                    print()
-                    print("INVALID INPUT")
-                    print("Only numbers may be used as scores ")
-                    print()
-
-            # incrementing index by one so we can get access to the next array in solo points
+    # while loop will run until the user gives a valid input
+    while True:
+        print()
+        # asking the user what event they would like to give points for
+        index = 1
+        for names in event_names:
+            print(str(index).ljust(10, ".") + names)
             index += 1
+
+        print()
+        user_input = input("Please enter what event you would like to give Points for: ")
+        if user_input == "1":
+            event_picked = event_names[0]
+            break
+        elif user_input == "2":
+            event_picked = event_names[1]
+            break
+        elif user_input == "3":
+            event_picked = event_names[2]
+            break
+        elif user_input == "4":
+            event_picked = event_names[3]
+            break
+        elif user_input == "5":
+            event_picked = event_names[4]
+            break
+        else:
+            print("Invalid Input")
+
+    # asking the user if the points will go to a team or solo entire
+    # loop will run until user gives a valid input
+    while True:
+        print()
+        print("(A) To give points to a Solo Entire")
+        print("(B) To give points to a Team Entire")
+        user_input = input()
+
+        if user_input.lower() == "a":
+            
+            # loop will run until the user has selected a person to give points to
+            while True:
+                # printing out all of the solo entries if the user picked A
+                print("Solo Entries")
+                index = 1
+                for names in solo_entries:
+                    print(str(index).ljust(10, ".") + names)
+                    index += 1
+
+                
+
+                # try block to catch any errors
+                try:
+
+                    # asking the user who to give to points to
+                    user_input = int(input("select a person to award points to: "))
+                    
+                    # this will hold the name that the user has selected
+                    person_selected = solo_entries[user_input - 1]
+                  
+
+                    # first we will look to see if this person is all ready in the solo  points array
+                    not_in_array = True
+                    index = 0
+                    
+                    for names in solo_points:
+                        # if the name is found in the array not_in_array will be set to falls
+                        if person_selected in solo_points[index][0]:
+                            not_in_array = False
+                        index += 1   
+
+                    # if not_in_array is still true then a new item will be created in the points array for them
+                    if not_in_array:
+                        temp_array = []
+                        temp_array.append(person_selected)
+                        temp_array.append(0)
+                        solo_points.append(temp_array)
+                        
+                    # the user will now enter in how many poitns they would like to give to there selection
+                    while True:
+                        print()
+                        points = input("Enter in how many points did " + str(person_selected) + " got in the "  + event_picked + " event: ")
+
+                        # if the user entered in a whole number then the program will move on
+                        if points.isdigit():
+                            break
+                        else:
+                            print()
+                            print("Can only give whole numbers as points")
+                            print()
+                        
+
+                    # finding the corect person in the points array and giving them the points
+                    for i in range(len(solo_points)):
+                        for j in range(len(solo_points[i])):
+                            if person_selected == solo_points[i][j]:
+                                solo_points[i][1] += int(points)
+
+                    break
+                            
+                    
+                except Exception as err:
+                    print()
+                    print("INVALID INPUT")
+                    print()
+     
+            
+        elif user_input.lower() == "b":
+            # printing out all of the teams
+            index = 1
+            print("Team Entries")
+            # printing out the names in the team arrays
+            # first for loop is to get the individual team arrays
+            for teams in team_entries:
+                print()
+                # bool will be used to print out extra text for the team name
+                name_of_team = True
+
+                # second for loop is for getting the items out of each array
+                for names in teams:
+                    # if it is the first item in the array it will be the team name
+                    if name_of_team:
+                        print(str(index).ljust(10, ".") + names)
+                        index += 1
+                        name_of_team = False
+                    else:
+                        print(names)
+
+                
+                # try block to catch any errors
+                try:
+
+                    # asking the user who to give to points to
+                    user_input = int(input("select a Team to award points to: "))
+                    
+                    # this will hold the name that the user has selected
+                    team_selected = team_entries[user_input - 1][0]
+
+                    # looking to see if this team is all ready in the team  points array
+                    not_in_array = True
+                    index = 0
+                    
+                    for names in team_points:
+                        # if the name is found in the array not_in_array will be set to false
+                        if team_selected in team_points[index][0]:
+                            not_in_array = False
+                        index += 1   
+
+                    # if not_in_array is still true then a new item will be created in the points array for them
+                    if not_in_array:
+                        temp_array = []
+                        temp_array.append(team_selected)
+                        temp_array.append(0)
+                        # adding the team in to the array
+                        team_points.append(temp_array)
+
+                    # the user will now enter in how many poitns they would like to give to there selection
+                    while True:
+                        print()
+                        points = input("Enter in how many points did " + str(team_selected) + " get in the "  + event_picked + " event: ")
+
+                        # if the user has entered in a whole number then the program will move on
+                        if points.isdigit():
+                            break
+                        else:
+                            print()
+                            print("Can only give whole numbers as points")
+                            print()
+                            
+                    # finding the corect team in the points array and giving them the points
+                    for i in range(len(team_points)):
+                        for j in range(len(team_points[i])):
+                            if team_selected == team_points[i][j]:
+                                team_points[i][1] += int(points)
+                    break
+                    
+                except Exception as err:
+                    print()
+                    print("INVALID INPUT")
+                    print()
+
+        break
 
 
 def print_out_socres():
     # printing out the header for the score bord using the .center function to aline  the text in the center
     print()
     text = "SCORE BOARD"
-    print(text.center(40, "#"))
+    print(text.center(40, "="))
 
     # printing out the scores for the solo entries
     print()
