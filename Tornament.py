@@ -357,28 +357,25 @@ def awarding_points():
             
         elif user_input.lower() == "b":
             # printing out all of the teams
-            index = 1
-            print("Team Entries")
-            # printing out the names in the team arrays
-            # first for loop is to get the individual team arrays
-            for teams in team_entries:
-                print()
-                # bool will be used to print out extra text for the team name
-                name_of_team = True
+            # having to use a while loop becase of error i could not find out how ot fix
 
-                # second for loop is for getting the items out of each array
-                for names in teams:
-                    # if it is the first item in the array it will be the team name
-                    if name_of_team:
-                        print(str(index).ljust(10, ".") + names)
-                        index += 1
-                        name_of_team = False
-                    else:
-                        print(names)
+            # getting the number teams in the array 
+            number_of_teams = len(team_entries)
+
+            # index will be used i cycle thorugh the array
+            index = 0
+
+            # loop will run untill all the Team names in the array have been printed 
+            while index <  number_of_teams:
+                print(str(index + 1).ljust(10, ".") + team_entries[index][0])
+                index += 1
+            
+            
+               
 
                 
                 # try block to catch any errors
-                try:
+            try:
 
                     # asking the user who to give to points to
                     user_input = int(input("select a Team to award points to: "))
@@ -424,7 +421,7 @@ def awarding_points():
                                 team_points[i][1] += int(points)
                     break
                     
-                except Exception as err:
+            except Exception as err:
                     print()
                     print("INVALID INPUT")
                     print()
